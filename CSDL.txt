@@ -1,0 +1,87 @@
+
+CREATE DATABASE QLKH;
+GO
+USE QLKH;
+GO
+
+-- Tạo bảng NhanVien
+
+CREATE TABLE NhanVien (
+    ID_employee INT PRIMARY KEY,              
+    name_employee NVARCHAR(100) NOT NULL,     
+    date_of_birth DATE,                       
+    gender NVARCHAR(10),                      
+    phonenumber VARCHAR(20),                  
+    address NVARCHAR(255),                    
+    email VARCHAR(100),                       
+    part NVARCHAR(50),                        
+    start_date DATE,                          
+    role VARCHAR(20) NOT NULL,                
+    username VARCHAR(50) UNIQUE NOT NULL,     
+    password VARCHAR(50) NOT NULL,            
+    avatar NVARCHAR(MAX)                     
+);
+GO
+
+-- Tạo bảng KhachHang
+
+CREATE TABLE KhachHang (
+    makh INT IDENTITY(1,1) PRIMARY KEY,      
+    tenkh NVARCHAR(100) NOT NULL,            
+    sdt VARCHAR(20),                        
+    diachi NVARCHAR(255),                     
+    diemtichluy INT DEFAULT 0,                
+    ngaysinh DATE                             
+);
+GO
+
+-- Tạo bảng SanPham (tên bảng trong code là san_pham)
+
+CREATE TABLE san_pham (
+    ma_sp VARCHAR(50) PRIMARY KEY,            
+    ten_sp NVARCHAR(100) NOT NULL,            
+    so_luong INT DEFAULT 0,                   
+    donvi_tinh NVARCHAR(20),                  
+    gia_nhap FLOAT,                           
+    gia_ban FLOAT,                            
+    hinh_anh NVARCHAR(MAX)                    
+);
+GO
+
+-- 5. Tạo bảng HoaDon
+
+CREATE TABLE HoaDon (
+    mahd INT IDENTITY(1,1) PRIMARY KEY,       
+    sdt_kh VARCHAR(20),                      
+    tongtien FLOAT,                           
+    ngaytao DATETIME DEFAULT GETDATE(),       
+    manv INT NOT NULL,                        
+    phuongthuc NVARCHAR(50),                  
+    dssanpham NVARCHAR(MAX),                  
+    ten_kh NVARCHAR(100)                      
+);
+GO
+
+--  Tạo bảng ChiTietHoaDon
+
+CREATE TABLE ChiTietHoaDon (
+    id INT IDENTITY(1,1) PRIMARY KEY,         
+    mahd INT NOT NULL,                        
+    masp VARCHAR(50) NOT NULL,               
+    soluong INT NOT NULL,                   
+    dongia FLOAT NOT NULL,                    
+    
+    -- Tạo khóa ngoại
+    CONSTRAINT FK_CTHD_HoaDon FOREIGN KEY (mahd) REFERENCES HoaDon(mahd),
+    CONSTRAINT FK_CTHD_SanPham FOREIGN KEY (masp) REFERENCES san_pham(ma_sp)
+);
+GO
+
+--  Thêm dữ liệu mẫu (Optional - để test đăng nhập)
+
+INSERT INTO NhanVien (ID_employee, name_employee, role, username, password, gender, start_date)
+VALUES (1, N'Quản Trị Viên', 'admin', 'admin', '123', N'Nam', GETDATE());
+
+INSERT INTO NhanVien (ID_employee, name_employee, role, username, password, gender, start_date)
+VALUES (2, N'Nhân Viên Bán Hàng', 'staff', 'nv01', '123', N'Nữ', GETDATE());
+GO
