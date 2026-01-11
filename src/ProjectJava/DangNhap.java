@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File; // Thêm thư viện File
 
 /**
  *
@@ -28,14 +29,39 @@ public class DangNhap extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         
+        // --- CÀI ĐẶT ẢNH LOGO TẠI ĐÂY ---
+        setupLogo(); 
+        
         buttonGroup1.add(rdoAdmin);
         buttonGroup1.add(rdoStaff);
         ButtonGroup bg = new ButtonGroup();
         bg.add(rdoAdmin);
         bg.add(rdoStaff);
         rdoStaff.setSelected(true);
-}
+    }
     
+    
+    // Hàm riêng để xử lý Logo
+    private void setupLogo() {
+        try {
+            // Đường dẫn tới file ảnh (Thư mục images nằm cùng cấp với src)
+            File f = new File("ProjectJava/images/logo.png");
+            
+            if (f.exists()) {
+                // Tải ảnh và thay đổi kích thước cho vừa khung (120x120)
+                ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+                Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                lbLogo.setIcon(new ImageIcon(img));
+                lbLogo.setText(""); // Xóa chữ LOGO
+            } else {
+                // Nếu không thấy ảnh thì giữ nguyên chữ
+                lbLogo.setText("LOGO (No Image)");
+                lbLogo.setForeground(Color.WHITE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,12 +84,12 @@ public class DangNhap extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField(); // Đổi thành JPasswordField cho bảo mật
         btnLogin = new javax.swing.JButton();
         rdoAdmin = new javax.swing.JRadioButton();
         rdoStaff = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng Nhập Hệ Thống");
 
         panelleft.setBackground(new java.awt.Color(255, 153, 102));
@@ -76,12 +102,12 @@ public class DangNhap extends javax.swing.JFrame {
         lblTO.setForeground(new java.awt.Color(255, 255, 255));
         lblTO.setText("TO");
 
-        lblDRSHOP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblDRSHOP.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lblDRSHOP.setForeground(new java.awt.Color(255, 255, 255));
         lblDRSHOP.setText("DRINK SHOP");
 
-
-        lbLogo.setText("LOGO");
+        // lbLogo được cấu hình trong hàm setupLogo(), ở đây chỉ định dạng căn giữa
+        lbLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout panelleftLayout = new javax.swing.GroupLayout(panelleft);
         panelleft.setLayout(panelleftLayout);
@@ -89,30 +115,29 @@ public class DangNhap extends javax.swing.JFrame {
             panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelleftLayout.createSequentialGroup()
                 .addGroup(panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblWELCOME, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelleftLayout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(lblTO, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelleftLayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(lblDRSHOP, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelleftLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(67, 67, 67)
+                        .addComponent(lblTO, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelleftLayout.createSequentialGroup()
+                        .addGap(40, 40, 40) // Căn chỉnh lại lề
+                        .addGroup(panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblWELCOME)
+                            .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))) // Tăng kích thước khung chứa Logo
+                    .addGroup(panelleftLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(lblDRSHOP)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         panelleftLayout.setVerticalGroup(
             panelleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelleftLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(lbLogo)
-                .addGap(29, 29, 29)
-                .addComponent(lblWELCOME, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE) // Tăng chiều cao khung chứa
                 .addGap(18, 18, 18)
+                .addComponent(lblWELCOME, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTO)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDRSHOP)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -120,10 +145,13 @@ public class DangNhap extends javax.swing.JFrame {
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitle.setText("[ ĐĂNG NHẬP HỆ THỐNG ]");
 
-        lblEmail.setText("Email:");
+        lblEmail.setText("Tên đăng nhập:");
 
         lblPass.setText("Mật khẩu:");
 
+        btnLogin.setBackground(new java.awt.Color(0, 153, 51)); // Màu xanh lá cho nút đăng nhập
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Đăng nhập");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,7 +178,7 @@ public class DangNhap extends javax.swing.JFrame {
         panelrightLayout.setHorizontalGroup(
             panelrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelrightLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 68, Short.MAX_VALUE)
                 .addComponent(lblTitle)
                 .addGap(46, 46, 46))
             .addGroup(panelrightLayout.createSequentialGroup()
@@ -171,7 +199,7 @@ public class DangNhap extends javax.swing.JFrame {
                         .addComponent(rdoStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelrightLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelrightLayout.setVerticalGroup(
@@ -192,7 +220,7 @@ public class DangNhap extends javax.swing.JFrame {
                     .addComponent(rdoStaff)
                     .addComponent(rdoAdmin))
                 .addGap(26, 26, 26)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -203,7 +231,7 @@ public class DangNhap extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelleft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelright, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -219,54 +247,49 @@ public class DangNhap extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        String username = txtEmail.getText().trim();
+        String password = new String(((JPasswordField)txtPassword).getPassword()).trim(); // Lấy password an toàn hơn
+        String role = " ";
 
-    String username = txtEmail.getText().trim();
-    String password = txtPassword.getText().trim();
-    String role = " ";
+        if (rdoAdmin.isSelected()) role = "admin";
+        else if (rdoStaff.isSelected()) role = "staff";
 
-    if (rdoAdmin.isSelected()) role = "admin";
-    else if (rdoStaff.isSelected()) role = "staff";
+        if (username.isEmpty() || password.isEmpty() || role.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+        
+        nhanvien nv = DBConnectionNV.checkLogin(username, password);
 
-    if (username.isEmpty() || password.isEmpty() || role.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Nhập đầy đủ thông tin!");
-        return;
-    }
-    nhanvien nv = DBConnectionNV.checkLogin(username, password);
-
-    if(nv != null){
-        String roleDB = nv.getRole().trim();
-        if (rdoAdmin.isSelected()) {
+        if(nv != null){
+            String roleDB = nv.getRole().trim();
+            if (rdoAdmin.isSelected()) {
                 if (!roleDB.equalsIgnoreCase("admin")) {
                     JOptionPane.showMessageDialog(this, 
                         "Tài khoản này là Nhân viên, vui lòng chọn mục 'Nhân viên'!", 
                         "Sai vai trò", JOptionPane.WARNING_MESSAGE);
-                    return; // Chặn lại, không cho vào
+                    return; 
                 }
             }
             
-            // Trường hợp 2: Người dùng tích chọn NHÂN VIÊN
-        if (rdoStaff.isSelected()) {
-                // Kiểm tra xem trong DB có phải là 'admin' không. Nếu là admin mà chọn staff thì báo lỗi
-                // Hoặc kiểm tra xem roleDB có phải là 'staff' hoặc 'NhanVien' không
+            if (rdoStaff.isSelected()) {
                 if (roleDB.equalsIgnoreCase("admin")) {
                     JOptionPane.showMessageDialog(this, 
                         "Tài khoản này là Admin, vui lòng chọn mục 'Admin'!", 
                         "Sai vai trò", JOptionPane.WARNING_MESSAGE);
-                    return; // Chặn lại
+                    return; 
                 }
+            }
+
+            Session.email = nv.getEmail();
+            Session.role = nv.getRole();
+            Session.userId = nv.getID_employee();
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công!\nXin chào: " + nv.getName_employee());
+            new Main(nv).setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-        Session.email = nv.getEmail();
-        Session.role = nv.getRole();
-        Session.userId = nv.getID_employee();
-        JOptionPane.showMessageDialog(this, "Đăng nhập thành công!\nXin chào: " + nv.getName_employee());
-        new Main(nv).setVisible(true);
-        this.dispose();
-    }else{
-        JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu!\", \"Lỗi\", JOptionPane.ERROR_MESSAGE ");
-    }
-
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void rdoAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoAdminActionPerformed
@@ -281,6 +304,7 @@ public class DangNhap extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        // FlatLaf hoặc LookAndFeel có thể được thêm ở đây nếu muốn giao diện đẹp hơn
         java.awt.EventQueue.invokeLater(() -> new DangNhap().setVisible(true));
     }
     
@@ -300,6 +324,6 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdoAdmin;
     private javax.swing.JRadioButton rdoStaff;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtPassword; // Vẫn khai báo là JTextField trong Netbeans GUI builder, nhưng tôi đã sửa thành JPasswordField trong code
     // End of variables declaration//GEN-END:variables
 }

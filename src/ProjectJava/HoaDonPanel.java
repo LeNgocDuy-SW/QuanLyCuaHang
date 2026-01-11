@@ -82,21 +82,18 @@ public class HoaDonPanel extends JPanel {
         qrPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20)); // Căn lề
         qrPanel.setLayout(new BoxLayout(qrPanel, BoxLayout.Y_AXIS));
         lbQRCode = new JLabel();
-        lbQRCode.setPreferredSize(new Dimension(350, 350));
+        lbQRCode.setPreferredSize(new Dimension(200, 200));
         lbQRCode.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         lbQRCode.setHorizontalAlignment(SwingConstants.CENTER);
         lbQRCode.setVisible(false);
 
         try {
-            java.io.File f = new java.io.File("images/qrcode.png"); 
-            
-            // --- THÊM 2 DÒNG NÀY ĐỂ KIỂM TRA ---
-         
-            // ------------------------------------
+            java.io.File f = new java.io.File("ProjectJava/images/qrcode.png"); 
 
             if (f.exists()) {
                 ImageIcon iconQR = new ImageIcon(f.getAbsolutePath());
-                Image imgQR = iconQR.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
+                // Scale ảnh xuống 200x200 để vừa khung mới
+                Image imgQR = iconQR.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                 lbQRCode.setIcon(new ImageIcon(imgQR));
                 lbQRCode.setText(""); 
             } else {
@@ -113,6 +110,7 @@ public class HoaDonPanel extends JPanel {
         JPanel qrContainer = new JPanel();
         qrContainer.setLayout(new BoxLayout(qrContainer, BoxLayout.Y_AXIS));
         qrContainer.setBackground(Color.WHITE);
+        qrContainer.add(lbQRCode);
         // --- ĐOẠN CODE ĐÃ SỬA LẠI ---
 
         // 1. Tạo một panel phụ để căn giữa QR Code
